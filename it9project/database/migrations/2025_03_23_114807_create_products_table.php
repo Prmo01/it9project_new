@@ -14,10 +14,17 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('product_id');
             $table->string('name');
-            $table->text('description')->nullable();
-            $table->decimal('price', 10, 2)->check('price >= 0');
-            $table->integer('quantity')->check('quantity >= 0');
-            $table->string('barcode')->unique();
+            $table->decimal('price', 10, 2)->unsigned()->default(0);
+            $table->integer('quantity')->unsigned()->default(0); 
+            $table->string('barcode', 12)->unique();
+            
+            
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->foreign('category_id')->references('category_id')->on('categories')
+                ->onUpdate('cascade') 
+                ->onDelete('set null'); 
+            
+            $table->timestamps(); 
         });
     }
 
