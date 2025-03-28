@@ -4,30 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Category; // Import the Category model
 
 class Product extends Model
 {
-    protected $primaryKey = 'product_id';
     use HasFactory;
 
+    protected $primaryKey = 'product_id'; // Set primary key to product_id
+
     protected $fillable = [
-        'name', 
-        'price', 
-        'quantity', 
-        'barcode', 
-        'category_id' // ✅ Add this
+        'name',
+        'price',
+        'quantity',
+        'barcode',
+        'category_id',
+        'cost_price',
+        'sell_price',
     ];
-    
 
- 
-
-    /**
-     * Define the relationship with the Category model.
-     */
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'category_id');
     }
-
 }

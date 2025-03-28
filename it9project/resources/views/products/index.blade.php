@@ -96,7 +96,8 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Price</th>
+                                    <th>Cost Price</th>
+                                    <th>Sell Price</th>
                                     <th>Quantity</th>
                                     <th>Barcode</th>
                                     <th>Action</th>
@@ -107,20 +108,23 @@
                                     <tr>
                                         <td>{{ $product->name }}</td>
                                         <td>{{ $product->category->category_name ?? 'N/A' }}</td>
-                                        <td>₱{{ number_format($product->price, 2) }}</td>
+                                        <td>₱{{ number_format($product->cost_price, 2) }}</td>
+                                        <td>₱{{ number_format($product->sell_price, 2) }}</td>
                                         <td>{{ $product->quantity }}</td>
                                         <td>{{ $product->barcode }}</td>
                                         <td class="action-buttons">
                                             <!-- Edit Button -->
                                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editProductModal" 
-                                                data-product-id="{{ $product->id }}"
+                                                data-product-id="{{ $product->product_id }}"
                                                 data-product-name="{{ $product->name }}"
                                                 data-product-category-id="{{ $product->category_id }}"
-                                                data-product-price="{{ $product->price }}"
+                                                data-product-cost-price="{{ $product->cost_price }}"
+                                                data-product-sell-price="{{ $product->sell_price }}"
                                                 data-product-quantity="{{ $product->quantity }}"
                                                 data-product-barcode="{{ $product->barcode }}">
                                                 <i class="bi bi-pencil"></i> Edit
                                             </button>
+
                                             <!-- Delete Button -->
                                             <form action="{{ route('products.destroy', $product->product_id) }}" method="POST" style="display:inline-block;">
                                                 @csrf
@@ -185,15 +189,26 @@
                                 @enderror
                             </div>
 
-                            <!-- Price -->
+                            <!-- Cost Price -->
                             <div class="form-group mb-3">
-                                <label for="price" class="form-label">Price</label>
-                                <input type="number" name="price" id="price" class="form-control" 
-                                    value="{{ old('price') }}" placeholder="Enter Price" min="0" step="0.01" required>
-                                @error('price')
+                                <label for="cost_price" class="form-label">Cost Price</label>
+                                <input type="number" name="cost_price" id="cost_price" class="form-control" 
+                                    value="{{ old('cost_price') }}" placeholder="Enter Cost Price" min="0" step="0.01" required>
+                                @error('cost_price')
                                     <small class="text-danger">{{ $message }}</small>
                                 @enderror
                             </div>
+
+                            <!-- Sell Price -->
+                            <div class="form-group mb-3">
+                                <label for="sell_price" class="form-label">Sell Price</label>
+                                <input type="number" name="sell_price" id="sell_price" class="form-control" 
+                                    value="{{ old('sell_price') }}" placeholder="Enter Sell Price" min="0" step="0.01" required>
+                                @error('sell_price')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+
 
                             <!-- Quantity (READONLY) -->
                             <div class="form-group mb-3">
@@ -252,18 +267,26 @@
                                 </select>
                             </div>
 
-                            <!-- Price -->
+                            <!-- Cost Price -->
                             <div class="form-group mb-3">
-                                <label for="edit_price" class="form-label">Price</label>
-                                <input type="number" name="price" id="edit_price" class="form-control" 
-                                    placeholder="Enter Price" min="0" step="0.01" required>
+                                <label for="edit_cost_price" class="form-label">Cost Price</label>
+                                <input type="number" name="cost_price" id="edit_cost_price" class="form-control" 
+                                    placeholder="Enter Cost Price" min="0" step="0.01" required>
                             </div>
+
+                            <!-- Sell Price -->
+                            <div class="form-group mb-3">
+                                <label for="edit_sell_price" class="form-label">Sell Price</label>
+                                <input type="number" name="sell_price" id="edit_sell_price" class="form-control" 
+                                    placeholder="Enter Sell Price" min="0" step="0.01" required>
+                            </div>
+
 
                             <!-- Quantity -->
                             <div class="form-group mb-3">
                                 <label for="edit_quantity" class="form-label">Quantity</label>
                                 <input type="number" name="quantity" id="edit_quantity" class="form-control" 
-                                    placeholder="Enter Quantity" required>
+                                    placeholder="Enter Quantity" readonly>
                             </div>
 
                             <!-- Barcode -->
@@ -296,7 +319,8 @@
                         const productId = button.getAttribute('data-product-id');
                         const productName = button.getAttribute('data-product-name');
                         const productCategoryId = button.getAttribute('data-product-category-id');
-                        const productPrice = button.getAttribute('data-product-price');
+                        const productCostPrice = button.getAttribute('data-product-cost-price');
+                        const productSellPrice = button.getAttribute('data-product-sell-price');
                         const productQuantity = button.getAttribute('data-product-quantity');
                         const productBarcode = button.getAttribute('data-product-barcode');
 
@@ -306,7 +330,8 @@
                         // Populate the form fields
                         document.getElementById('edit_name').value = productName;
                         document.getElementById('edit_category_id').value = productCategoryId;
-                        document.getElementById('edit_price').value = productPrice;
+                        document.getElementById('edit_cost_price').value = productCostPrice;
+                        document.getElementById('edit_sell_price').value = productSellPrice;
                         document.getElementById('edit_quantity').value = productQuantity;
                         document.getElementById('edit_barcode').value = productBarcode;
                     });
