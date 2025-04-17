@@ -24,7 +24,7 @@ class ProductController extends Controller
             $query->where('category_id', $request->input('category'));
         }
 
-        $products = $query->paginate(7);
+        $products = $query->paginate(6);
         $categories = Category::all();
 
         return view('products.index', compact('products', 'categories'));

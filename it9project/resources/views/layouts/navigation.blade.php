@@ -35,6 +35,18 @@
                     </x-nav-link>
                 </div>
 
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('stockin.index')" :active="request()->routeIs('stockin.index')">
+                        {{ __('Stock In') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('transaction.index')" :active="request()->routeIs('transaction.index')">
+                        {{ __('Transact') }}
+                    </x-nav-link>
+                </div>
+
                 
             </div>
 
